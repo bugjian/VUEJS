@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+</head>
+<body>
+    <div class="container">
+        <button class="btn btn-default" @dblclick="show();addFont()">
+            点击
+        </button>
+        <ul>
+            <li v-for="value in arr">
+                {{value}}
+            </li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>          
+    <script>
+        var vm = new Vue({
+            el:".container",
+            data:{
+                name:'jian',
+                arr:[1,2,3,4,5]
+            },
+            methods:{
+                show:function(){
+                    alert(1);
+                },
+                addFont:function(){
+                    this.arr.push(6);
+                }
+
+            }
+
+        })
+    </script>
+</body>
+</html>

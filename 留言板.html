@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+</head>
+<body>
+    <div class="container" id="app">
+        <input type="text" placeholder="请输入内容" v-model="newContent"/>
+        <button class="btn btn-default" @click="show()">添加</button>
+        <div>
+            <ul class="list-unstyled col-lg-6">
+                <li v-for="(value,index) in msg">
+                    <div class="form-group">
+                        时间：{{value.date}}
+                    </div>
+                    <div class="form-group">
+                        内容：{{value.content}}
+                    </div>
+                    <div class='form-group'>
+                        <button class="btn btn-default" @click="del(index)">
+                            delete
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:[{
+                    date: new Date(),
+                    content: '今天天气真的不错'
+                }]
+            },
+            methods:{
+                show: function() {
+                    if( this.newContent ) {
+                        this.msg.push({
+                            date: new Date(),
+                            content: this.newContent
+                        })
+                    }
+                },
+                del: function(index) {
+                    this.msg.splice(index,1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
