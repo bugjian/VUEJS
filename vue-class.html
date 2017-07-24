@@ -4,18 +4,38 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="css/bootstrap.css"/>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container" id="app">
-        <input type="text" class="form-control"  @keyup.up="show1()"/>
-        <a :href = "url">baidu</a>
+        <ul>
+            <li :class="{red:true}">1</li>
+            <li :class="[a]">2</li>
+            <li :class="json">3</li>
+            <li :style="{color:'red'}">4</li>
+            <li :style="[c,d]">5</li>
+        </ul>
     </div>
     <script src="js/vue.js"></script>
     <script>
         var vm = new Vue({
             el:"#app",
             data:{
-                url:"https://www.baidu.com/"
+                url:"https://www.baidu.com/",
+                a:'red',
+                json:{
+                    red:true
+                },
+                c:{
+                    color:'red'
+                },
+                d:{
+                    backgroundColor:'red'
+                }
             },
             methods:{
                 show: function(ev){

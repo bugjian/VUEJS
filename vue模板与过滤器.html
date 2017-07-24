@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <ul>
+        <li>{{name}}</li>
+        <li>{{a}}</li>
+    </ul>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            name:'jian',
+            a:'abcdef'
+        },
+        methods:{
+            show: function(ev){
+                alert(ev.keyCode);
+            },
+            show1: function(){
+                alert('弹起');
+            }
+        }
+    })
+</script>
+</body>
+</html>
