@@ -13,10 +13,10 @@
 <body>
 <div id="app">
     <input type="text" v-model="content"
-           @keyup="get($event)" @keydown.up.prevent="up()" @keydown.down.prevent="down()"
+           @keyup="get($event);get1($event)" @keydown.up.prevent="up()" @keydown.down.prevent="down()"
             @keyup.enter="go"/>
     <ul class="nav nav-static">
-        <li v-for="(v,i) in reson" :class="{black:c[i]}">
+        <li v-for="(v,i) in resonAll" :class="{black:c[i]}">
             <a href="#" >{{v}}</a>
         </li>
     </ul>
@@ -28,9 +28,11 @@
         el: "#app",
         data: {
             content: '',
-            reson: [],
+            reson1: [],
+            reson2: [],
+            resonAll: [],
             now: -1,
-            c:[],
+            c:[]
         },
         methods: {
             get: function (ev) {
@@ -41,8 +43,23 @@
                         },
                         jsonp: 'cb'
                     }).then(function (res) {
-                        this.reson = res.data.s;
-                        this.c.length = this.reson.length;
+                        this.reson1 = res.data.s;
+                    }, function (res) {
+                        alert('error');
+                    })
+                }
+            },
+            get1: function (ev) {
+                if (ev.keyCode > 40 || ev.keyCode < 37) {
+                    this.$http.jsonp('https://sug.so.360.cn/suggest', {
+                        params: {
+                            word: this.content
+                        },
+                        jsonp: 'callback'
+                    }).then(function (res) {
+                        this.reson2 = res.data.s;
+                        this.resonAll = this.reson1.concat(this.reson2);
+                        this.c.length = this.resonAll.length;
                     }, function (res) {
                         alert('error');
                     })
@@ -52,20 +69,27 @@
                 this.now--;
                 this.c = [];
                 if(this.now < 0 ){
-                    this.now = this.reson.length-1;
+                    this.now = this.resonAll.length-1;
                 }
                 this.c[this.now] = true;
+                this.content = this.resonAll[this.now];
             },
             down:function(){
                 this.now++;
                 this.c = [];
-                if(this.now > this.reson.length-1 ){
+                if(this.now > this.resonAll.length-1 ){
                     this.now = 0;
                 }
                 this.c[this.now] = true;
+                this.content = this.resonAll[this.now];
             },
             go:function(){
-                window.open('https://www.baidu.com/s?wd='+this.reson[this.now]+'&rsv_spt=1&rsv_iqid=0xcae658ef0001c5fd&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=6&rsv_sug1=5&rsv_sug7=100&inputT=2395&rsv_sug4=2452')
+                if(this.reson1.indexOf(this.resonAll[this.now]) != -1){
+                    window.open('https://www.baidu.com/s?wd='+this.resonAll[this.now]+'&rsv_spt=1&rsv_iqid=0xcae658ef0001c5fd&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=6&rsv_sug1=5&rsv_sug7=100&inputT=2395&rsv_sug4=2452');
+                } else {
+                    window.open('https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q='+this.resonAll[this.now]);
+                }
+
             }
         }
     })
