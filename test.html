@@ -7,23 +7,15 @@
 </head>
 <body>
     <div id="app">
-        <div class="container">
-            <input type="text" v-model.lazy="rad" value="888"/>
-            <p>{{rad}}</p>
-        </div>
+        <p>{{total}}</p>
+        <my-component @intion="inter" >
+            <template scope="props">
+                <p>hello from parent</p>
+                <p>{{ props.text }}</p>
+            </template>
+        </my-component>
     </div>
     <script src="js/vue.js"></script>
-    <script>
-        var vm = new Vue({
-            el:'#app',
-            data:{
-                checkedNames:[],
-                rad:[]
-            },
-            methods:{
-
-            }
-        });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
